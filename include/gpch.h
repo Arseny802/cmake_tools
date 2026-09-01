@@ -44,6 +44,11 @@
 #include <variant>
 #include <vector>
 
+// Root project version information autoinclude
+#if __has_include(<version.h>)
+#  include <version.h>
+#endif
+
 // std::format OR fmt::format
 #if __has_include(<format>)
 #  include <format>
