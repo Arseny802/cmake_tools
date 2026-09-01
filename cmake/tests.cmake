@@ -62,6 +62,7 @@ function(setup_project_tests)
     ${ARG_TESTING_TARGET}
     ${ARG_USES}
     GTest::gmock_main
+    cmake_tools
   )
 
   set_target_properties(${ARG_TARGET_NAME} PROPERTIES

@@ -86,6 +86,7 @@ inline std::string format(const char fmt_str[], Args&&... args) {
 #endif
 }
 
+/*
 template<typename... Args>
 inline std::string fmt(const char fmt_str[], Args&&... args) {
   if constexpr (sizeof...(Args)) {
@@ -93,3 +94,4 @@ inline std::string fmt(const char fmt_str[], Args&&... args) {
   }
   return fmt_str;
 }
+*/

@@ -19,7 +19,7 @@ function(add_target TARGET_NAME)
   endif()
 
   if(NOT ARG_SOURCES)
-    message(FATAL_ERROR "SOURCES or SOURCES_PATH argument is required for add_target for ${ARG_TARGET_NAME}")
+    message(FATAL_ERROR "SOURCES or SOURCES_PATH argument is required for add_target for ${TARGET_NAME}")
   endif()
 
   if (ARG_EXCLUDE_FROM_ALL)
@@ -63,7 +63,7 @@ function(add_target TARGET_NAME)
 
       add_library(${BUILD_TARGET_NAME} ${EXCLUDE_FROM_ALL} OBJECT ${ARG_SOURCES})
       add_executable(${TARGET_NAME} ${EXCLUDE_FROM_ALL} ${MAIN_SOURCE_FILE})
-      target_link_libraries(${TARGET_NAME} PUBLIC ${BUILD_TARGET_NAME})
+      target_link_libraries(${TARGET_NAME} PUBLIC ${BUILD_TARGET_NAME} cmake_tools)
     else()
       add_executable(${TARGET_NAME} ${EXCLUDE_FROM_ALL} ${ARG_SOURCES})
     endif(ADD_TESTS)
@@ -73,7 +73,7 @@ function(add_target TARGET_NAME)
     if (ADD_TESTS)
       add_library(${BUILD_TARGET_NAME} ${EXCLUDE_FROM_ALL} OBJECT ${ARG_SOURCES})
       add_library(${TARGET_NAME} ${EXCLUDE_FROM_ALL} SHARED)
-      target_link_libraries(${TARGET_NAME} PUBLIC ${BUILD_TARGET_NAME})
+      target_link_libraries(${TARGET_NAME} PUBLIC ${BUILD_TARGET_NAME} cmake_tools)
     else()
       add_library(${TARGET_NAME} ${EXCLUDE_FROM_ALL} SHARED ${ARG_SOURCES})
     endif(ADD_TESTS)
@@ -85,11 +85,11 @@ function(add_target TARGET_NAME)
     message(FATAL "Target type spicify error!")
   endif()
 
-  if (${ARG_TARGET_NAME} NOT STREQUAL "cmake_tools")
-    set(ARG_USES_PRIVATE ${ARG_USES_PRIVATE} "cmake_tools")
+  if (NOT "${TARGET_NAME}" STREQUAL "cmake_tools")
+    list(APPEND ARG_USES_PRIVATE "cmake_tools")
   endif()
 
-  message(${ARG_USES_PUBLIC} ${ARG_USES_PRIVATE})
+  message("${TARGET_NAME}: ${ARG_USES_PRIVATE}")
   target_link_libraries(${BUILD_TARGET_NAME} 
     PUBLIC ${ARG_USES_PUBLIC}
     PRIVATE ${ARG_USES_PRIVATE}
